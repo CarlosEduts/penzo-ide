@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
+import mongooseConn from "./config/mongooseConn.config";
 
 const app = express();
 
@@ -13,6 +14,10 @@ app.use(express.json({ type: "application/vnd.api+json" }));
 app.use(morgan("dev"));
 app.use(cors());
 
+// Retornando a conexão via mongoose via external file usando 'app.set()'
+app.set("mongoose connection", mongooseConn);
+
+// Uso dos rotas da API
 app.use("/api/", index);
 
 export default app;

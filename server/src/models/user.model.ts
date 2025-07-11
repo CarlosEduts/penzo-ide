@@ -34,7 +34,7 @@ userSchema.methods.generateAuthToken = async function () {
   );
   this.tokens = this.tokens.concat({ token });
 
-  await this.save;
+  await this.save();
   return token;
 };
 

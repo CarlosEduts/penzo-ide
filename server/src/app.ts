@@ -7,7 +7,8 @@ const app = express();
 
 // Rotas da API
 import index from "./routes/index";
-import userRouter from './routes/user.routes'
+import userRouter from "./routes/user.routes";
+import projectRouter from "./routes/project.router";
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -20,6 +21,7 @@ app.set("mongoose connection", mongooseConn);
 
 // Uso dos rotas da API
 app.use("/api/", index);
-app.use('/api', userRouter)
+app.use("/api", userRouter);
+app.use("/api/projects", projectRouter);
 
 export default app;

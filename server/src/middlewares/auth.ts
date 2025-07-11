@@ -20,13 +20,13 @@ export default (req: IUserRequest, res: Response, next: NextFunction) => {
     const token = authHeader.replace("Bearer ", "");
     console.log(token);
 
-    const decoded = jwt.verify(token, "secret") as JwtPayload;
-
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload;
     req.userData = decoded;
 
     next();
   } catch (err) {
-    res.status(401).json({ message: `Falha na Autenticação ...: ${err}` });
+    res.status(401).json({ message: `Falha na Autenticação.` });
+    console.log(err);
     return;
   }
 };

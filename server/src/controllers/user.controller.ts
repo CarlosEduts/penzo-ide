@@ -12,9 +12,11 @@ const register = async (req: Request, res: Response) => {
     const newUser = new User(req.body);
     const user = await newUser.save();
     const token = await user.generateAuthToken();
-    res
-      .status(201)
-      .json({ message: "Usuário cadastrado com sucesso!", user, token });
+    res.status(201).json({
+      message: "Usuário cadastrado com sucesso!",
+      user: { name: user.name, email: user.email, id: user._id },
+      token,
+    });
   } catch (err) {
     res.status(400).json({ err });
     return;
@@ -33,9 +35,11 @@ const login = async (req: Request, res: Response) => {
       return;
     }
     const token = await user.generateAuthToken();
-    res
-      .status(201)
-      .json({ message: "Usuário(a) logado com sucesso!", user, token });
+    res.status(201).json({
+      message: "Usuário(a) logado com sucesso!",
+      user: { name: user.name, email: user.email, id: user._id },
+      token,
+    });
   } catch (err) {
     res.status(400).json({ err });
     return;

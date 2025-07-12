@@ -83,5 +83,33 @@ const returnProjects = async (req: IUserRequest, res: Response) => {
   res.json(projects);
 };
 
-const projectController = { create, edit, deleteProject, returnProjects };
+const returnProjectById = async (req: IUserRequest, res: Response) => {
+  const { id } = req.params;
+
+  try {
+    const project = await Project.findById(id);
+    if (!project) {
+      res.status(404).json({ message: "Projeto não encontrado." });
+      return;
+    }
+    if (project.isPublic || project.owner.toString() === req.userData?._id) {
+      res.json(project);
+      return;
+    } else {
+      res.status(403).json({ message: "Acesso negado." });
+      return;
+    }
+  } catch (err) {
+    res.status(500).json({ message: "Erro ao buscar projeto." });
+    console.error(err);
+  }
+};
+
+const projectController = {
+  create,
+  edit,
+  deleteProject,
+  returnProjectById,
+  returnProjects,
+};
 export default projectController;

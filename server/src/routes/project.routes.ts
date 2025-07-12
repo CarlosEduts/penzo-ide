@@ -16,4 +16,7 @@ router.get("/my-projects", auth, projectController.returnProjects);
 // Rota para deletar projeto
 router.delete("/:id", auth, projectController.deleteProject);
 
+// Rota para ver projeto por ID
+router.get("/:id", auth, projectController.returnProjectById);
+
 export default router;

@@ -8,7 +8,7 @@ const app = express();
 // Rotas da API
 import index from "./routes/index";
 import userRouter from "./routes/user.routes";
-import projectRouter from "./routes/project.router";
+import projectRouter from "./routes/project.routes";
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

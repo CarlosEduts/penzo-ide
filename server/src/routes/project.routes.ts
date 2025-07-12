@@ -13,4 +13,7 @@ router.put("/:id", auth, projectController.edit);
 // Rota para ver todos os projetos
 router.get("/my-projects", auth, projectController.returnProjects);
 
+// Rota para deletar projeto
+router.delete("/:id", auth, projectController.deleteProject);
+
 export default router;

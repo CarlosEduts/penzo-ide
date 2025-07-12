@@ -53,11 +53,35 @@ const edit = async (req: IUserRequest, res: Response) => {
   }
 };
 
+const deleteProject = async (req: IUserRequest, res: Response) => {
+  const { id } = req.params;
+
+  try {
+    const project = await Project.findById(id);
+
+    if (!project) {
+      res.status(404).json({ message: "Projeto não encontrado." });
+      return;
+    }
+
+    if (project?.owner.toString() !== req.userData?._id) {
+      res.status(403).json({ message: "Acesso negado." });
+      return;
+    }
+
+    await project.deleteOne();
+    res.status(200).json({ message: "Projeto deletado com sucesso." });
+  } catch (err) {
+    res.status(500).json({ message: "Erro ao deletar projeto." });
+    console.log(err);
+  }
+};
+
 const returnProjects = async (req: IUserRequest, res: Response) => {
   const userId = req.userData?._id;
   const projects = await Project.find({ owner: userId });
   res.json(projects);
 };
 
-const projectController = { create, edit, returnProjects };
+const projectController = { create, edit, deleteProject, returnProjects };
 export default projectController;

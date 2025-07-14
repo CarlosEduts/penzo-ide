@@ -4,7 +4,9 @@ import { Request, Response } from "express";
 interface IUserRequest extends Request {
   userData?: { _id: string };
 }
-const create = async (req: IUserRequest, res: Response) => {
+
+// Função para criar projeto
+const createProject = async (req: IUserRequest, res: Response) => {
   try {
     const { name, codeHtml, codeCss, codeJs, isPublic } = req.body;
     const userId = req.userData?._id;
@@ -24,7 +26,8 @@ const create = async (req: IUserRequest, res: Response) => {
   }
 };
 
-const edit = async (req: IUserRequest, res: Response) => {
+// Função para editar projeto
+const editProject = async (req: IUserRequest, res: Response) => {
   const { id } = req.params;
   const { name, codeHtml, codeCss, codeJs, isPublic } = req.body;
 
@@ -53,6 +56,7 @@ const edit = async (req: IUserRequest, res: Response) => {
   }
 };
 
+// Função para deletar projeto
 const deleteProject = async (req: IUserRequest, res: Response) => {
   const { id } = req.params;
 
@@ -77,17 +81,20 @@ const deleteProject = async (req: IUserRequest, res: Response) => {
   }
 };
 
+// Função para retornar projetos do usuário autenticado
 const returnProjects = async (req: IUserRequest, res: Response) => {
   const userId = req.userData?._id;
   const projects = await Project.find({ owner: userId });
   res.json(projects);
 };
 
+// Função para retornar projetos públicos
 const returnPublicProjects = async (req: Request, res: Response) => {
   const projects = await Project.find({ isPublic: true });
   res.json(projects);
 };
 
+// Função para retornar projeto por _id
 const returnProjectById = async (req: IUserRequest, res: Response) => {
   const { id } = req.params;
 
@@ -111,8 +118,8 @@ const returnProjectById = async (req: IUserRequest, res: Response) => {
 };
 
 const projectController = {
-  create,
-  edit,
+  createProject,
+  editProject,
   deleteProject,
   returnProjectById,
   returnPublicProjects,

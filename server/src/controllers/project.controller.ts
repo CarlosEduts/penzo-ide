@@ -83,6 +83,11 @@ const returnProjects = async (req: IUserRequest, res: Response) => {
   res.json(projects);
 };
 
+const returnPublicProjects = async (req: Request, res: Response) => {
+  const projects = await Project.find({ isPublic: true });
+  res.json(projects);
+};
+
 const returnProjectById = async (req: IUserRequest, res: Response) => {
   const { id } = req.params;
 
@@ -110,6 +115,7 @@ const projectController = {
   edit,
   deleteProject,
   returnProjectById,
+  returnPublicProjects,
   returnProjects,
 };
 export default projectController;

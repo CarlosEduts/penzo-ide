@@ -8,15 +8,18 @@ const router = express.Router();
 router.post("/create", auth, projectController.create);
 
 // Rota para editar projeto
-router.put("/:id", auth, projectController.edit);
+router.put("/id/:id", auth, projectController.edit);
 
 // Rota para ver todos os projetos
-router.get("/my-projects", auth, projectController.returnProjects);
+router.get("/my", auth, projectController.returnProjects);
 
 // Rota para deletar projeto
-router.delete("/:id", auth, projectController.deleteProject);
+router.delete("/id/:id", auth, projectController.deleteProject);
 
 // Rota para ver projeto por ID
-router.get("/:id", auth, projectController.returnProjectById);
+router.get("/id/:id", auth, projectController.returnProjectById);
+
+// Rota para ver projetos públicos
+router.get("/public", projectController.returnPublicProjects);
 
 export default router;

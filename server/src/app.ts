@@ -14,7 +14,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.json({ type: "application/vnd.api+json" }));
 app.use(morgan("dev"));
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3001", // porta do seu Next
+    credentials: true,
+  })
+);
 
 // Retornando a conexão via mongoose via external file usando 'app.set()'
 app.set("mongoose connection", mongooseConn);
